@@ -23,7 +23,7 @@
            		   </div>
            		   <div class="div">
            		   		<h5>Usuario</h5>
-           		   		<input type="text" class="input">
+           		   		<input type="text" class="input" v-model="usuario">
            		   </div>
            		</div>
            		<div class="input-div pass">
@@ -32,7 +32,7 @@
            		   </div>
            		   <div class="div">
            		    	<h5>Contraseña</h5>
-           		    	<input type="password" class="input">
+           		    	<input type="password" class="input" v-model="password">
             	   </div>
             	</div>
             	<a href="#">Olvidaste tu Contraseña?</a>
