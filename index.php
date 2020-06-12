@@ -36,7 +36,7 @@
             	   </div>
             	</div>
             	<a href="#">Olvidaste tu Contraseña?</a>
-              <button @click="ingresar" class="btn">Iniciar Sesión</button>
+              <button @click="autenticar" class="btn">Iniciar Sesión</button>
             </div>
         </div>
     </div>
