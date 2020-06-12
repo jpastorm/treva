@@ -5,6 +5,11 @@ include "../../utils.php";
 
 $dbConn =  connect($db);
 
+$_POST = json_decode(file_get_contents("php://input"), true);
+
+$opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
+
+
 /*
   listar todos los posts o solo uno
  */
@@ -35,22 +40,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $input = $_POST;
-    $sql = "INSERT INTO usuario
-          (nombre, apellido_pat, apellido_mat, correo, usuario, contrasenia, celular, id_tipousuario)
-          VALUES
-          (:nombre, :apellido_pat, :apellido_mat, :correo, :usuario, :contrasenia, :celular, :id_tipousuario)";
-    $statement = $dbConn->prepare($sql);
-    bindAllValues($statement, $input);
-    $statement->execute();
-    $postId = $dbConn->lastInsertId();
-    if($postId)
-    {
-      $input['id_usuario'] = $postId;
-      header("HTTP/1.1 200 OK");
-      echo json_encode($input);
-      exit();
-	 }
+  $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
+    switch (opcion){
+      case 1:
+
+        $input = $_POST;
+        $sql = "INSERT INTO usuario
+        (nombre, apellido_pat, apellido_mat, correo,
+        usuario, contrasenia, celular, id_tipousuario)
+        VALUES
+        (:nombre, :apellido_pat, :apellido_mat, :correo,
+        :usuario, :contrasenia, :celular, :id_tipousuario)";
+        $statement = $dbConn->prepare($sql);
+        bindAllValues($statement, $input);
+        $statement->execute();
+        $postId = $dbConn->lastInsertId();
+
+        if($postId)
+        {
+          $input['id_usuario'] = $postId;
+          header("HTTP/1.1 200 OK");
+          echo json_encode($input);
+          exit();
+        }
+
+        break;  
+      case 2:
+
+        if( isset($_POST['id_usuario']) && isset($_POST['usuario']) ){
+          $myObj->estado = 'TRUE';
+          $myObj->mensaje = "Lo que sea";
+          echo json_encode($myObj);
+          session_start();
+          $_SESSION["id_usuario"]=$id_usuario;
+          $_SESSION["usuario"]=$usuario;
+        }else{
+          $myObj->estado = 'FALSE';
+          $myObj->mensaje = "Lo que no sea";
+          echo json_encode($myObj);
+        }
+        break;
+    }
+    
+    
 }
 
 //Borrar
