@@ -8,6 +8,7 @@ $dbConn =  connect($db);
 /*
   listar todos los posts o solo uno
  */
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
     if (isset($_GET['id_formulario']))
@@ -21,6 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         exit();
     }
     else {
+		if(isset($_GET['id_usuario']))
+		{
+		//mostrar los formularios de un usuario por id
+		$sql = $dbConn->prepare("SELECT * FROM formulario where id_usuario=:id_usuario order by fecha DESC");
+			 $sql->bindValue(':id_usuario', $_GET['id_usuario']);
+        $sql->execute();
+        $sql->setFetchMode(PDO::FETCH_ASSOC);
+        header("HTTP/1.1 200 OK");
+          echo json_encode( $sql->fetchAll()  );
+        exit();
+		}else{
         //Mostrar lista de post
         $sql = $dbConn->prepare("SELECT * FROM formulario");
         $sql->execute();
@@ -28,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         header("HTTP/1.1 200 OK");
         echo json_encode( $sql->fetchAll()  );
         exit();
+		}
     }
 }
 
