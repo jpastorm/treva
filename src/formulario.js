@@ -5,7 +5,9 @@
 		},
 		methods:{
 			listar:function(){
-				axios.get('api/v1/formulario.php').then(resp => {
+				var id_usuario=document.getElementById("id_usuario").value;
+				console.log(id_usuario);
+				axios.get('api/v1/formulario.php?id_usuario='+id_usuario).then(resp => {
 					console.log(resp.data);
 					this.formularios=resp.data
 				});

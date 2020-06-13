@@ -119,24 +119,22 @@ if (!isset($_SESSION['id_usuario'])) {
       </nav>
       <!-- End Navbar -->
       <div class="content" id="app">
-        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>">
-        <div class="row">
-          <div class="col-md-12">
+        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>" id="id_usuario">
+        <div class="row d-flex justify-content-around">
+          <div class="col-md-4" v-for="formulario in formularios">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Tabla de Formularios </h4>
+                <h4 class="card-title"> {{formulario.titulo}} </h4>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
                   <!--COMIENZO DE LA TABLA GAAA-->
-                  <div class="card" style="width: 18rem;" v-for="formulario in formularios">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                  <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="assets/img/form.png" alt="Card image cap" width="10px" height="100px">
                     <div class="card-body">
                       <p class="card-text">{{ formulario.titulo }} </p>
                     </div>
                   </div>
                   <!--ACABA LA TABLA GAAA-->
-                </div>
               </div>
             </div>
           </div>
