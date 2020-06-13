@@ -1,4 +1,10 @@
 
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+  header('Location: index.php' );
+}
+ ?>
 <!doctype html>
 <html lang="en">
 
@@ -33,6 +39,7 @@
         </a>
         <a href="#" class="simple-text logo-normal">
           Your Logo
+
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->

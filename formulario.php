@@ -1,3 +1,11 @@
+
+<?php
+session_start(); 
+if (!isset($_SESSION['id_usuario'])) {
+  header('Location: index.php' );
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -111,54 +119,22 @@
       </nav>
       <!-- End Navbar -->
       <div class="content" id="app">
+        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Tabla de Formularios</h4>
+                <h4 class="card-title"> Tabla de Formularios </h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <!--COMIENZO DE LA TABLA GAAA-->
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        N°
-                      </th>
-                      <th>
-                        Titulo
-                      </th>
-                      <th>
-                        Estado
-                      </th>
-                      <th>
-                        Fecha
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(formulario,indice) in formularios">
-                        <td >
-                          {{ indice+1 }}
-                        </td>
-                        <td hidden>
-                          {{ formulario.id_formulario }}
-                        </td>
-                        <td>
-                          {{ formulario.titulo }}
-                        </td>
-                        <td>
-                          {{ formulario.estado }}
-                        </td>
-                        <td>
-                          {{ formulario.fecha }}
-                        </td>
-                        <td>
-                          <button><i class="nc-icon nc-settings-gear-65" style="font-size: 2em"></i></button>
-                          <button><i class="nc-icon nc-send" style="font-size: 2em"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="card" style="width: 18rem;" v-for="formulario in formularios">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text">{{ formulario.titulo }} </p>
+                    </div>
+                  </div>
                   <!--ACABA LA TABLA GAAA-->
                 </div>
               </div>
@@ -178,16 +154,16 @@
 </div>
 </div>
 
-  
+
 <!--   Core JS Files   -->
-  <script src="./assets/js/core/jquery.min.js"></script>
-  <script src="./assets/js/core/popper.min.js"></script>
-  <script src="./assets/js/core/bootstrap.min.js"></script>
-  <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="./assets/js/core/jquery.min.js"></script>
+<script src="./assets/js/core/popper.min.js"></script>
+<script src="./assets/js/core/bootstrap.min.js"></script>
+<script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+<script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
 <script src="./assets/js/axios.js"></script>
-  <script src="./assets/js/vue.js"></script>
+<script src="./assets/js/vue.js"></script>
 <script src="src/formulario.js"></script>
 </body>
 

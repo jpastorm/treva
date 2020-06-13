@@ -5,7 +5,7 @@
 		},
 		methods:{
 			listar:function(){
-				axios.get('http://treva.clan.pe/api/v1/formulario.php').then(resp => {
+				axios.get('api/v1/formulario.php').then(resp => {
 					console.log(resp.data);
 					this.formularios=resp.data
 				});
