@@ -119,7 +119,12 @@ if (!isset($_SESSION['id_usuario'])) {
       </nav>
       <!-- End Navbar -->
       <div class="content" id="app">
-        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>" id="id_usuario">
+      <div class="d-flex justify-content-between">
+      <h4><i class="nc-icon nc-single-copy-04"></i>Tus Formularios</h4>
+      <button class="btn btn-primary" @click="nuevoFormulario"><i class="nc-icon nc-simple-add"></i> Nuevo Formulario</button>
+      </div>
+      <hr style="color: #0056b2;" />
+        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>" id="id_usuario" hidden>
         <div class="row d-flex justify-content-around">
           <div class="col-md-4" v-for="formulario in formularios">
             <div class="card">
@@ -160,6 +165,7 @@ if (!isset($_SESSION['id_usuario'])) {
 <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+<script src="./assets/js/sweetalert.js"></script>
 <script src="./assets/js/axios.js"></script>
 <script src="./assets/js/vue.js"></script>
 <script src="src/formulario.js"></script>
