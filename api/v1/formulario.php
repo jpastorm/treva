@@ -47,22 +47,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    //$time = time();
     $input = $_POST;
+    //$titulo=$_POST['titulo'];
+    //$id_usuario=$_POST['id_usuario'];
+    //$descripcion=$_POST['descripcion'];
+    $titulo="TITULO";
+    $id_usuario=2;
+    $descripcion="UNA DESCRIPCION";
+    $estado="A";
+    $link="link";
+   // $fecha=date("Y-d-m", $time);
+   // $hora=date("H:i:s", $time);
+   $fecha="2016-10-23";
+   $hora="12:08:00";
     $sql = "INSERT INTO formulario
           (titulo, descripcion, estado, link, fecha, hora, id_usuario)
           VALUES
           (:titulo, :descripcion, :estado, :link, :fecha, :hora, :id_usuario)";
     $statement = $dbConn->prepare($sql);
-    bindAllValues($statement, $input);
+    $statement->bindParam(':titulo',$titulo);
+    $statement->bindParam(':descripcion',$descripcion);
+    $statement->bindValue(':estado',$estado);
+    $statement->bindParam(':link',$link);
+    $statement->bindParam(':fecha',$fecha);
+    $statement->bindParam(':hora',$hora);
+    $statement->bindParam(':id_usuario',$id_usuario);
     $statement->execute();
     $postId = $dbConn->lastInsertId();
     if($postId)
     {
+        
         $input['id_formulario'] = $postId;
-        header("HTTP/1.1 200 OK");
-        echo json_encode($input);
-        exit();
+        $idreal=$input['id_formulario'];
+        $link=hash($idreal,$id_usuario);
+        $statement = $dbConn->prepare("UPDATE formulario SET link=:link where id_formulario=:id_formulario");
+        $statement->bindValue(':id_formulario', $idreal);
+        $statement->execute();
+        return json_encode(array("estado"=>true,"link"=>$link));
     }
+    return false;
 }
 
 //Borrar

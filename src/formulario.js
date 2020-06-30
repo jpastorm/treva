@@ -10,10 +10,18 @@
 		},
 		methods:{
 			verificar:function(){
-				axios.get('api/v1/formulario.php?titulo='+this.titulo).then(resp => {
+				params = {
+					id_usuario:this.id_usuario,						
+					titulo:this.titulo,
+					descripcion:this.descripcion				
+				}
+				axios.post('api/v1/formulario.php',params).then(resp => {
 					console.log(resp.data);
 					if (resp.data[0].estado) {
-						this.AgregarFormulario()
+						this.AgregarFormulario(res.data[0].link);
+					}
+					else{
+						console.log("fallo");
 					}
 				});
 			},
@@ -73,11 +81,12 @@
 						this.descripcion=respuestas[1];
 						console.log(this.titulo);
 						console.log(this.descripcion);
+						this.verificar();
 					}
 				})
 			},
-			AgregarFormulario:function(){
-
+			AgregarFormulario:function(link){
+				console.log(link);
 			}
 		},
 		created:function(){
