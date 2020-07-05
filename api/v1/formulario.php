@@ -4,7 +4,31 @@ include "../../utils.php";
 
 
 $dbConn =  connect($db);
+//function linkupdate($id_usuario,$id_formulario){ 
+   /* $metodo = "cast5-cbc";
+$dato = "{id_usu:".$id_usuario.",id_form:".$id_formulario."}";
+$contra = "123456789";
+$iv = "54352653";
+$link = openssl_encrypt($dato, $metodo, $contra, false, $iv);*/
+/*$link="lkjashdf";
 
+
+    $sql2 = "UPDATE formulario
+          SET link=:link
+          WHERE id_formulario=:id_formulario AND id_usuario=:id_usuario
+           ";
+    try{
+    $resultado1 = $dbConn->prepare($sql2);
+    $resultado1->bindParam(':id_formulario',$id_formulario);
+    $resultado1->bindParam(':id_usuario',$id_usuario);
+    $resultado1->bindParam(':link',$link);
+    $resultado1->execute();
+    return $link;
+    }catch(PDOException $e){
+        return $e->getMessage();
+    }
+  
+}*/
 /*
   listar todos los posts o solo uno
  */
@@ -47,16 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-   // $time = time();
+    $time = time();
     $titulo=$_POST["titulo"];
     $descripcion=$_POST["descripcion"];
     $estado="A";
     $link="link";
-    $fecha="date";
-    $hora="date";
+    $fecha=date("Y-d-m", $time);
+    $hora=date("H:i", $time) ;
     $id_usuario=$_POST["id_usuario"];
     $puntajemax=$_POST["puntajemax"];
-
+  
+    $input = $_POST;
     $sql = "INSERT INTO formulario
           (titulo, descripcion, estado, link, fecha, hora, id_usuario, puntajemax)
           VALUES
@@ -74,10 +99,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $postId = $dbConn->lastInsertId();
     if($postId)
     {
-        $input['id_formulario'] = $postId;
+        //$input['id_formulario'] = $postId;
+       // $link=linkupdate($id_usuario,$postId);
+        //--------------------------------------------
+         $metodo = "cast5-cbc";
+         $dato = ' {
+            "id_usu": "'.$id_usuario.'",'
+            .'"id_form":"'.$postId.'"}';
+$contra = "123456789";
+$iv = "54352653";
+$link = openssl_encrypt($dato, $metodo, $contra, false, $iv);
+       
+
+
+    $sql2 = "UPDATE formulario
+          SET link=:link
+          WHERE id_formulario=:id_formulario AND id_usuario=:id_usuario
+           ";
+    try{
+    $resultado1 = $dbConn->prepare($sql2);
+    $resultado1->bindParam(':id_formulario',$postId);
+    $resultado1->bindParam(':id_usuario',$id_usuario);
+    $resultado1->bindParam(':link',$link);
+    $resultado1->execute();
+    }catch(PDOException $e){
+        $link=$e->getMessage();
+    }
+        //--------------------------------------------
         $res ="se guardo su formulario correctamente";
         header("HTTP/1.1 200 OK");
-        echo json_encode(array("message"=>$res,"idformulario"=>$postId));
+        echo json_encode(array("message"=>$res,"link"=>$link));
         exit();
     }
 
