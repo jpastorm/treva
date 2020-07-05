@@ -46,8 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if($postId)
     {
         $input['id_pregunta'] = $postId;
+        $mensaje = "se guardo su pregunta correctamente";
         header("HTTP/1.1 200 OK");
-        echo json_encode($input);
+        echo json_encode($mensaje);
         exit();
     }
 }

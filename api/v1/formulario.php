@@ -47,20 +47,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $input = $_POST;
+   // $time = time();
+    $titulo=$_POST["titulo"];
+    $descripcion=$_POST["descripcion"];
+    $estado="A";
+    $link="link";
+    $fecha="date";
+    $hora="date";
+    $id_usuario=$_POST["id_usuario"];
+    $puntajemax=$_POST["puntajemax"];
+
     $sql = "INSERT INTO formulario
           (titulo, descripcion, estado, link, fecha, hora, id_usuario, puntajemax)
           VALUES
           (:titulo, :descripcion, :estado, :link, :fecha, :hora, :id_usuario, :puntajemax)";
-    $statement = $dbConn->prepare($sql);
-    bindAllValues($statement, $input);
-    $statement->execute();
+    $resultado = $dbConn->prepare($sql);
+    $resultado->bindParam(':titulo',$titulo);
+    $resultado->bindParam(':descripcion',$descripcion);
+    $resultado->bindParam(':estado',$estado);
+    $resultado->bindParam(':link',$link);
+    $resultado->bindParam(':fecha',$fecha);
+    $resultado->bindParam(':hora',$hora);
+    $resultado->bindParam(':id_usuario',$id_usuario);
+    $resultado->bindParam(':puntajemax',$puntajemax);
+    $resultado->execute();
     $postId = $dbConn->lastInsertId();
     if($postId)
     {
         $input['id_formulario'] = $postId;
+        $res ="se guardo su formulario correctamente";
         header("HTTP/1.1 200 OK");
-        echo json_encode($input);
+        echo json_encode(array("message"=>$res,"idformulario"=>$postId));
         exit();
     }
 
@@ -79,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 
 //Actualizar
 // PARA EL PUT LOS DATOS SE ENVIAN DE MANERA DIFERENTE EJEMPLO:http://localhost/WebAPITREVA_V1/usuario.php?id_usuario=2&correo=jpastor123@gmail.com
+//http://localhost/WebAPITREVA_V1/usuario.php?token=jashdfkjasdhf
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
     $input = $_GET;
