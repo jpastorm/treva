@@ -21,6 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         exit();
     }
     else {
+        if (isset($_GET['id_formulario']))
+        {
+            //Mostrar un post
+            $sql = $dbConn->prepare("SELECT * FROM pregunta where id_formulario=:id_formulario");
+            $sql->bindValue(':id_formulario', $_GET['id_formulario']);
+            $sql->execute();
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            header("HTTP/1.1 200 OK");
+            echo json_encode(  $sql->fetchAll()  );
+            exit();
+        }
+        else {
         //Mostrar lista de post
         $sql = $dbConn->prepare("SELECT * FROM pregunta");
         $sql->execute();
@@ -28,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         header("HTTP/1.1 200 OK");
         echo json_encode( $sql->fetchAll()  );
         exit();
+        }
     }
 }
 

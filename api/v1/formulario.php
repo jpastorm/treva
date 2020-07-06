@@ -4,31 +4,7 @@ include "../../utils.php";
 
 
 $dbConn =  connect($db);
-//function linkupdate($id_usuario,$id_formulario){ 
-   /* $metodo = "cast5-cbc";
-$dato = "{id_usu:".$id_usuario.",id_form:".$id_formulario."}";
-$contra = "123456789";
-$iv = "54352653";
-$link = openssl_encrypt($dato, $metodo, $contra, false, $iv);*/
-/*$link="lkjashdf";
 
-
-    $sql2 = "UPDATE formulario
-          SET link=:link
-          WHERE id_formulario=:id_formulario AND id_usuario=:id_usuario
-           ";
-    try{
-    $resultado1 = $dbConn->prepare($sql2);
-    $resultado1->bindParam(':id_formulario',$id_formulario);
-    $resultado1->bindParam(':id_usuario',$id_usuario);
-    $resultado1->bindParam(':link',$link);
-    $resultado1->execute();
-    return $link;
-    }catch(PDOException $e){
-        return $e->getMessage();
-    }
-  
-}*/
 /*
   listar todos los posts o solo uno
  */
@@ -57,6 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
           echo json_encode( $sql->fetchAll()  );
         exit();
 		}else{
+            //Desencriptar Link
+            if(isset($_GET['link']))
+            {
+            $metodo = "cast5-cbc";
+            $contra = "123456789";
+            $iv = "54352653";
+            //remplazar espacios con +
+            $linkencript=preg_replace('/\s+/', '+', $_GET['link']);
+            //-----------
+            $linkdescript = openssl_decrypt($linkencript,$metodo,$contra,false,$iv);
+            $reponse=json_decode($linkdescript,true);
+            echo $linkdescript;
+            exit();
+            }else{
         //Mostrar lista de post
         $sql = $dbConn->prepare("SELECT * FROM formulario");
         $sql->execute();
@@ -64,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         header("HTTP/1.1 200 OK");
         echo json_encode( $sql->fetchAll()  );
         exit();
+        }
 		}
     }
 }
