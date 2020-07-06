@@ -128,7 +128,7 @@ $link = openssl_encrypt($dato, $metodo, $contra, false, $iv);
         //--------------------------------------------
         $res ="se guardo su formulario correctamente";
         header("HTTP/1.1 200 OK");
-        echo json_encode(array("message"=>$res,"link"=>$link));
+        echo json_encode(array("message"=>$res,"link"=>$link,"estado"=>"true"));
         exit();
     }
 

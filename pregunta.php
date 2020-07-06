@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION['id_usuario'])) {
   header('Location: index.php' );
 }
+$id_formulario=$_GET['id_form'];
 ?>
 
 <!doctype html>
@@ -119,33 +120,11 @@ if (!isset($_SESSION['id_usuario'])) {
       </nav>
       <!-- End Navbar -->
       <div class="content" id="app">
-      <div class="d-flex justify-content-between">
-      <h4><i class="nc-icon nc-single-copy-04"></i>Tus Formularios</h4>
-      <button class="btn btn-primary" @click="nuevoFormulario"><i class="nc-icon nc-simple-add"></i> Nuevo Formulario</button>
-      </div>
-      <hr style="color: #0056b2;" />
-        <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>" id="id_usuario" hidden>
-        <div class="row d-flex justify-content-around">
-          <div class="col-md-4" v-for="formulario in formularios">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> {{formulario.titulo}} </h4>
-              </div>
-              <div class="card-body">
-                  <!--COMIENZO DE LA TABLA GAAA-->
-                  <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="assets/img/form.png" alt="Card image cap" width="10px" height="100px">
-                    <div class="card-body">
-                      <!--<p class="card-text">{{ formulario.titulo }} </p>-->
-                      <p class="card-text">{{ formulario.titulo }} </p>
-                      <a :href="'pregunta.php?id_form=' + formulario.id_formulario">Link permanente</a>
-                    </div>
-                  </div>
-                  <!--ACABA LA TABLA GAAA-->
-              </div>
-            </div>
-          </div>
-
+        <h1><?php echo $id_formulario ?></h1>
+        <input type="text" value="<?php echo $id_formulario ?>" id="id_formulario" hidden>
+        <div v-for="pregunta in preguntas">
+            <h4> {{pregunta.descripcion}} </h4>
+            
         </div>
       </div>
     </div>
@@ -170,7 +149,7 @@ if (!isset($_SESSION['id_usuario'])) {
 <script src="./assets/js/sweetalert.js"></script>
 <script src="./assets/js/axios.js"></script>
 <script src="./assets/js/vue.js"></script>
-<script src="src/formulario.js"></script>
+<script src="src/pregunta.js"></script>
 </body>
 
 </html>

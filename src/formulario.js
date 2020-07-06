@@ -6,23 +6,37 @@
 			descripcion:"",
 			link:"",
 			nombreUsuario:"",
-			id_usuario:""
+			id_usuario:"",
+			puntajeMax:""
 		},
 		methods:{
 			verificar:function(){
 				params = {
 					id_usuario:this.id_usuario,						
 					titulo:this.titulo,
-					descripcion:this.descripcion				
+					descripcion:this.descripcion,
+					puntajemax:this.puntajeMax				
 				}
 				axios.post('api/v1/formulario.php',params).then(resp => {
 					console.log(resp.data);
-					if (resp.data[0].estado) {
-						this.AgregarFormulario(res.data[0].link);
-					}
-					else{
-						console.log("fallo");
-					}
+					if(resp.data.estado=="true"){
+						var newlink="treva.clan.pe/view.php?form="+resp.data.link;
+						
+						Swal.fire({
+							title: "<p>Tu formulario fue creado</p>", 
+							html: '<a hreft="'+newlink+'">'+newlink+'</a>',
+							confirmButtonText: "Aceptar", 
+						  });
+						  this.listar();
+					}else{
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Something went wrong!',
+							footer: '<a href>Why do I have this issue?</a>'
+						  })
+					}					
+
 				});
 			},
 			obtenerUsusario:function(){
@@ -38,7 +52,7 @@
 			listar:function(){
 				var id_usuario=document.getElementById("id_usuario").value;
 				console.log(id_usuario);
-				axios.get('api/v1/formulario.php?id_usuario='+this.id_usuario).then(resp => {
+				axios.get('api/v1/formulario.php?id_usuario='+id_usuario).then(resp => {
 					console.log(resp.data);
 					this.formularios=resp.data
 				});
@@ -48,7 +62,7 @@
 					input:"text",
 					confirmButtonText: 'Next &rarr;',
 					showCancelButton: true,
-					progressSteps: ['1', '2']
+					progressSteps: ['1', '2','3']
 				}).queue([
 				{
 					title: 'Titulo',
@@ -57,18 +71,15 @@
 				{
 					title: 'Descripcion',
 					text: 'Informacion adicional'
+				},
+				{
+					title: 'Puntaje maximo',
+					text: 'Si coloca letras explotaremos'
 				}
 				]).then((result) => {
 					if (result.value) {
-						const answers = JSON.stringify(result.value)
-						Swal.fire({
-							title: 'All done!',
-							html: `
-							Your answers:
-							<pre><code>${answers}</code></pre>
-							`,
-							confirmButtonText: 'ACEPTAR TODO!'
-						})
+						
+
 						//this.listar();
 						console.log(result.value);
 						const respuestas=result.value;
@@ -79,8 +90,10 @@
 						console.log("ESA ES");
 						this.titulo=respuestas[0];
 						this.descripcion=respuestas[1];
+						this.puntajeMax=respuestas[2];
 						console.log(this.titulo);
 						console.log(this.descripcion);
+						console.log(this.puntajeMax);
 						this.verificar();
 					}
 				})
