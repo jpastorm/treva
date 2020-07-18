@@ -120,11 +120,41 @@ $id_formulario=$_GET['id_form'];
       </nav>
       <!-- End Navbar -->
       <div class="content" id="app">
-        <h1><?php echo $id_formulario ?></h1>
+      <div class="d-flex justify-content-between">
+      <h4><i class="nc-icon nc-single-copy-04"></i>Tus Preguntas</h4>
+      <button class="btn btn-primary" @click="addpregunta"><i class="nc-icon nc-simple-add"></i> Nueva Pregunta</button>
+      </div>
+        <h1> {{nombreform}} </h1>
+        <h2> {{link}} </h2>
         <input type="text" value="<?php echo $id_formulario ?>" id="id_formulario" hidden>
-        <div v-for="pregunta in preguntas">
-            <h4> {{pregunta.descripcion}} </h4>
-            
+       
+              
+                    <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(pregunta,indice) in preguntas">
+                      <th scope="row">{{indice+1}}</th>
+                      <td> {{pregunta.descripcion}} </td>                      
+                      <td>
+                        <button>Editar</button>
+                        <button @click="eliminar(pregunta.id_pregunta)">Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
+                      
+              
+                  <!--ACABA LA TABLA GAAA-->
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
