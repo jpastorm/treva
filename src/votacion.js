@@ -1,10 +1,18 @@
 var app = new Vue({
     el: '#app',
     data:{
-       link:"",
-       id_formulario:"",
-       preguntas:[],
-       puntajeMax:5
+        link:"",
+        id_formulario:"",
+        preguntas:[],
+        puntajeMax:5,
+        opciones:[
+            {value:1,text:"opcion1"},
+            {value:2,text:"opcion2"},
+            {value:3,text:"opcion3"},
+            {value:4,text:"opcion4"},
+            {value:5,text:"opcion5"}
+        ],
+        elecciones:[]
     },
     methods:{
         decryptlink:function(){
@@ -24,9 +32,41 @@ var app = new Vue({
                 console.log(resp.data);
                 this.preguntas=resp.data                
             });
-            }
-        }, 
+        },
+        //RADIO+ID
+        getSeleccion(){
+            for(let i = 0; i< this.preguntas.length;i++ ){                    
+                let activoFijo = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
+                console.log(activoFijo)
+                if(activoFijo){
+                    let datos={
+                        id:this.preguntas[i].id_pregunta,value:activoFijo    
+                    }
+                    if(this.elecciones.length==0){
+                        this.elecciones.push(datos);
+                        console.log(this.elecciones)
+                    }else{
+                        for(let j = 0 ; j < this.elecciones.length ; j++){                        
+                            if(this.elecciones.id != this.preguntas[i].id_pregunta){
+                                this.elecciones.push(datos);
+                            console.log(this.elecciones)
+                            }
+                    }
+                    
+                        
+                    }
+                    
+                }
+                
+                
+                
+            } 
+            /* let activoFijo = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
+            console.log(activoFijo) */
+        }
+    }, 
     created:function(){
-       this.decryptlink();
+        this.decryptlink();
     }});
-
+    
+    
