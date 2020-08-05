@@ -1,10 +1,20 @@
 var app = new Vue({
     el: '#app',
     data:{
-       link:"",
-       id_formulario:"",
-       preguntas:[],
-       puntajeMax:5
+        link:"",
+        id_formulario:"",
+        preguntas:[],
+        puntajeMax:5,
+        opciones:[
+            {value:1,text:"opcion1"},
+            {value:2,text:"opcion2"},
+            {value:3,text:"opcion3"},
+            {value:4,text:"opcion4"},
+            {value:5,text:"opcion5"}
+        ],
+        elecciones:[],
+        seleccionado:"",
+        result:[]
     },
     methods:{
         decryptlink:function(){
@@ -24,9 +34,33 @@ var app = new Vue({
                 console.log(resp.data);
                 this.preguntas=resp.data                
             });
-            }
-        }, 
-    created:function(){
-       this.decryptlink();
-    }});
+        },
+        //RADIO+ID
 
+        getSeleccion(){      
+            let data=[]      
+            for(let i = 0; i< this.preguntas.length;i++ ){                    
+                
+                let seleccion = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
+                    
+                        data.push({id:this.preguntas[i].id_pregunta,value:seleccion})
+                        console.log(data)
+                    if(seleccion){
+                        if(this.elecciones.length==0){
+                            this.elecciones.push(data)
+                            break
+                        }
+                    }  
+                    console.log("Se va del for") 
+                    }                    
+                    console.log("result")
+                    console.log(data)    
+                }
+                
+                
+    }, 
+    created:function(){
+        this.decryptlink();
+    }});
+    
+    
