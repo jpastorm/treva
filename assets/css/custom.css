@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+.opcion {
+    background-color: #fce2ce;
+    padding-top:2em;
+    margin: 5px;
+    height: 50px;
+    width: 200px;
+    border-radius: 1em;
+}
+.opciones{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Mono', monospace;
+}
+.opcionfinal{
+    display: flex;
+    justify-content: space-between;
+}
+.container{
+    width: 90%;
+}
+body{
+    background: #4ECDC4;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #6e9292, #709493);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #7aa7a6, #8bd1d0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.tarjeta{
+    background-color:#f9f7d9;
+    border-radius: 1.5em;
+}
+h3{
+    padding-top:1.5em;
+    padding-bottom:1em;
+    font-family: 'Roboto Mono', monospace;
+}
+p{
+    padding-left: 2em;
+    padding-right: 2em;
+    font-family: 'Roboto Mono', monospace;
+}
+.opcion1:hover {
+    
+    color:white; background:red;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
+  .opcion2:hover {
+    
+    color:white; background:#ffc1f3;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
+  .opcion3:hover {
+    
+    color:white; background:#94b49b;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
+  .opcion4:hover {
+    
+    color:white; background:#68cd7f;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
+  .opcion4:hover {
+    
+    color:white; background:#68cd7f;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
+  .opcion5:hover {
+    
+    color:white; background:#4ccd6a;
+  -o-transition:color .2s ease-out, background 1s ease-in;
+  -ms-transition:color .2s ease-out, background 1s ease-in;
+  -moz-transition:color .2s ease-out, background 1s ease-in;
+  -webkit-transition:color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition:color .2s ease-out, background 1s ease-in;
+  }
