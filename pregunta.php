@@ -125,7 +125,7 @@ $id_formulario=$_GET['id_form'];
       <button class="btn btn-primary" @click="addpregunta"><i class="nc-icon nc-simple-add"></i> Nueva Pregunta</button>
       </div>
         <h1> {{nombreform}} </h1>
-        <h2> {{link}} </h2>
+        <h3><a :href="'votacion.php?link='+link" target="_blank">Tu enlace </a> </h3>
         <input type="text" value="<?php echo $id_formulario ?>" id="id_formulario" hidden>
        
               
