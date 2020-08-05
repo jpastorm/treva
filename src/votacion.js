@@ -12,7 +12,9 @@ var app = new Vue({
             {value:4,text:"opcion4"},
             {value:5,text:"opcion5"}
         ],
-        elecciones:[]
+        elecciones:[],
+        seleccionado:"",
+        result:[]
     },
     methods:{
         decryptlink:function(){
@@ -34,36 +36,28 @@ var app = new Vue({
             });
         },
         //RADIO+ID
-        getSeleccion(){
+
+        getSeleccion(){      
+            let data=[]      
             for(let i = 0; i< this.preguntas.length;i++ ){                    
-                let activoFijo = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
-                console.log(activoFijo)
-                if(activoFijo){
-                    let datos={
-                        id:this.preguntas[i].id_pregunta,value:activoFijo    
-                    }
-                    if(this.elecciones.length==0){
-                        this.elecciones.push(datos);
-                        console.log(this.elecciones)
-                    }else{
-                        for(let j = 0 ; j < this.elecciones.length ; j++){                        
-                            if(this.elecciones.id != this.preguntas[i].id_pregunta){
-                                this.elecciones.push(datos);
-                            console.log(this.elecciones)
-                            }
-                    }
+                
+                let seleccion = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
                     
-                        
-                    }
-                    
+                        data.push({id:this.preguntas[i].id_pregunta,value:seleccion})
+                        console.log(data)
+                    if(seleccion){
+                        if(this.elecciones.length==0){
+                            this.elecciones.push(data)
+                            break
+                        }
+                    }  
+                    console.log("Se va del for") 
+                    }                    
+                    console.log("result")
+                    console.log(data)    
                 }
                 
                 
-                
-            } 
-            /* let activoFijo = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();
-            console.log(activoFijo) */
-        }
     }, 
     created:function(){
         this.decryptlink();
