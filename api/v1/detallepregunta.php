@@ -37,22 +37,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $input = $_POST;
+  /*   for ($i=0; $i < count($input["data"]) ; $i++) { 
+        echo $item["data"][$i]["id"];
+        echo $item["data"][$i]["value"];
+    }
+
+    var_dump($input["data"]);
+    die(); */
     $sql = "INSERT INTO detallepregunta
           (puntaje, id_pregunta)
           VALUES
           (:puntaje, :id_pregunta)";
-    $statement = $dbConn->prepare($sql);
-    bindAllValues($statement, $input);
-    $statement->execute();
-    $postId = $dbConn->lastInsertId();
-    if($postId)
-    {
-        $input['id_detallepregunta'] = $postId;
-        $mensaje = "se guardo el detalle pregunta correctamente";
-        header("HTTP/1.1 200 OK");
-        echo json_encode($mensaje);
-        exit();
+
+    for ($i=0; $i < count($input["data"]) ; $i++) { 
+        $stmt = $dbConn->Prepare($sql);
+        $stmt->bindValue(':puntaje', $input["data"][$i]["value"]);
+        $stmt->bindValue(':id_pregunta', $input["data"][$i]["id"]);        
+        $stmt->execute();
     }
+    $mensaje = "se guardo el detalle pregunta correctamente";
+    header("HTTP/1.1 200 OK");
+    echo json_encode($mensaje);
+    exit();
 }
 
 //Borrar
@@ -88,7 +94,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 }
 
 
-//En caso de que ninguna de las opciones anteriores se haya ejecutado
-header("HTTP/1.1 400 Bad Request");
 
 ?>

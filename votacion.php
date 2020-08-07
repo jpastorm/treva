@@ -22,22 +22,44 @@ if (!isset($_GET["link"])) {
 <body>
     <center>
 <div id="app" class="container">
-<input type="text" value="<?php echo $link ?>" id="link">
+<div v-if="isvoted == false">
+<input type="text" value="<?php echo $link ?>" id="link" hidden>
+<form @submit="checkform">
     <div class="tarjeta" v-for="pregunta of preguntas">
     <h3>{{pregunta.descripcion}}</h3>
+    
     <div class="opciones">
         <div v-for="(op,indice) of opciones">
-            <div :class="'opcion opcion'+(indice+1)">
-            <input type="radio" :name="'radio'+pregunta.id_pregunta" :value="op.value" @change="getSeleccion"> {{op.text}}</input>
-            </div>
         
+            <div :class="'opcion opcion'+(indice+1)">
+            <input type="radio" :name="'radio'+pregunta.id_pregunta" :value="op.value" @change="getSeleccion" required> {{op.text}}</input>
+            </div>
+            
+            
         </div>
     </div>
     <div class="opcionfinal">
-        <p><strong>Muy malo</strong></p>
-        <p><strong>Excelente</strong></p>
+        <p class="malo"><strong>Muy malo</strong></p>
+        <p class="malo"><strong>Excelente</strong></p>
     </div>
     </div>
+    <br>
+    <div class="izquierda">
+    <input class="buttonstyle" type="submit" value="Enviar">
+    </div>
+</form>
+</div>
+<div v-else>
+<div class="card">
+<br>
+<h1 class="guardado">{{titulo}}</h1>
+<p class="guardado">Se ha registrado tu respuesta.</p>
+<a @click="recargar" class="response">Enviar otra Respuesta</a>
+</div>
+<br>
+<p class="guardado color">Este contenido no ha sido creado ni aprobado por Treva. Notificar uso inadecuado - Términos del Servicio - Política de Privacidad</p>      
+<div><h2 class="guardado color">Treva</h2></div>
+</div>
 </div>
 </center>
 <script  src="./assets/js/sweetalert.js"></script>

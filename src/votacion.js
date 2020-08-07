@@ -14,7 +14,9 @@ var app = new Vue({
         ],
         elecciones:[],
         seleccionado:"",
-        result:[]
+        result:[],
+        isvoted:false,
+        titulo:""
     },
     methods:{
         decryptlink:function(){
@@ -54,9 +56,32 @@ var app = new Vue({
                     console.log("Se va del for") 
                     }                    
                     console.log("result")
-                    console.log(data)    
-                }
-                
+                    console.log(data)
+                    this.result=data;    
+        },
+        checkform(e){
+            e.preventDefault()    
+            let params = {
+                data: this.result
+            }                   
+            axios.post('api/v1/detallepregunta.php',params).then(resp => {
+                console.log(resp.data);   
+                this.isvoted=true 
+                console.log(this.isvoted)   
+                this.getForm();
+            });
+            
+        },
+        async getForm(){
+            console.log(this.id_formulario)
+            const resp= await fetch('api/v1/formulario.php?id_formulario='+this.id_formulario);
+            const {titulo,link}= await resp.json();
+            console.log(titulo,link)
+            this.titulo=titulo;
+        },
+        recargar(){
+            location.href ="votacion.php?link="+this.link;
+        }      
                 
     }, 
     created:function(){
