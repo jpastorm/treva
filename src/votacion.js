@@ -14,17 +14,18 @@ var app = new Vue({
         datosUsu:[],
         puntajeMax:5,
         opciones:[
-            {value:1,text:"opcion1"},
-            {value:2,text:"opcion2"},
-            {value:3,text:"opcion3"},
-            {value:4,text:"opcion4"},
-            {value:5,text:"opcion5"}
+        {value:1,text:"opcion1"},
+        {value:2,text:"opcion2"},
+        {value:3,text:"opcion3"},
+        {value:4,text:"opcion4"},
+        {value:5,text:"opcion5"}
         ],
         elecciones:[],
         seleccionado:"",
         result:[],
         isvoted:false,
-        titulo:""
+        titulo:"",
+        checked:false
     },
     methods:{
         decryptlink:function(){
@@ -61,46 +62,71 @@ var app = new Vue({
             });
         },
 
- 
-  
-   
+
+
+
         //RADIO+ID
 
         getSeleccion(){      
             let data=[]      
             for(let i = 0; i< this.preguntas.length;i++ ){                    
-                
-                let seleccion = $(`input[name=radio${this.preguntas[i].id_pregunta}]`).val();
-                        data.push({id:this.preguntas[i].id_pregunta,value:seleccion})
-                        console.log(data)
-                    if(seleccion){
-                        if(this.elecciones.length==0){
-                            this.elecciones.push(data)
-                            break
-                        }
-                    }  
+
+                let seleccion = $(`input[name=radio${this.preguntas[i].id_pregunta}]:checked`).val();                    
+                data.push({id:this.preguntas[i].id_pregunta,value:seleccion})
+                    //console.log(data)
                     console.log("Se va del for") 
-                    }                    
-                    console.log("result")
-                    console.log(data)
-                    this.result=data;    
-        },
-        checkform(e){
-            e.preventDefault()    
-            let params = {
-                data: this.result
-            }                   
-            axios.post('api/v1/detallepregunta.php',params).then(resp => {
-                console.log(resp.data);   
-                this.isvoted=true 
-                console.log(this.isvoted)   
-                this.getForm();
-            });
+                }                    
+                console.log("result")
+                //console.log(data)
+                this.result=data;    
+                console.log(this.result)
+            },
+            checkform(e){
+                let undi = false
+                console.log("enviando")
+                //e.preventDefault()  
+                for (var i = 0; i < this.result.length; i++) {
+                    if (typeof this.result[i].value == 'undefined') {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Debe llenar todos los campos',                          
+                      })
+                        undi = true
+                    }
+                }
+                if (this.result.length <= 0) {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Debe llenar todos los campos',                          
+                      })
+                    undi = true
+                }
+                if (!this.checked) {
+                    Swal.fire({
+                          icon: 'info',
+                          title: 'Terms and Conditions',
+                          text: 'Debe aceptar los terminos y condiciones para seguir...',                          
+                      })
+
+                }
+                if (!undi && this.checked) {
+                let params = {
+                    data: this.result
+                }                   
+                axios.post('api/v1/detallepregunta.php',params).then(resp => {
+                    console.log(resp.data);   
+                    this.isvoted=true 
+                    console.log(this.isvoted)   
+                    this.getForm();
+                 });    
+                }        
             
         },
         async getForm(){
             console.log(this.id_formulario)
-      
+
             const resp= await fetch('api/v1/formulario.php?id_formulario='+this.id_formulario);
             const {titulo,link}= await resp.json();
             console.log(titulo,link)
@@ -109,12 +135,8 @@ var app = new Vue({
         recargar(){
             location.href ="votacion.php?link="+this.link;
         }      
-                
+
     }, 
     created:function(){
         this.decryptlink();
     }});
-
-
-    
-    

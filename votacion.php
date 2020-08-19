@@ -7,7 +7,7 @@ if (!isset($_GET["link"])) {
 }else{
     $link=$linkencript=preg_replace('/\s+/', '+', $_GET['link']);
 }
-?>
+?> 
 
 
 <!DOCTYPE html>
@@ -94,47 +94,49 @@ $randomnum= rand(1,3);
              <div class="col-xl-12 col-lg-12">   
              <div v-if="isvoted == false">
             <div id="top-wizard">
-                <form id="wrapped" @submit="checkform" autocomplete="off">
+               <!-- <form id="wrapped" @submit="checkform" autocomplete="off">-->
                 <input id="website" name="website" type="text" value="">
 				<!-- Leave for security protection, read docs for details -->
 				<div id="middle-wizard">
                    
                     <!-- Cada step es una pregunta -->
-                    
+
+                    <form>
+
                     <div class="step" v-for="(pregunta, index) in preguntas">
 
                          <br><br><br>
-                         <input :id="'question_'+(index+1)" :name="'radio'+pregunta.id_pregunta" />
+                         <input :id="'question_'+(index+1)" :name="'radio'+pregunta.id_pregunta" hidden/>
                       <h3 class="main_question"><strong>{{index+1}} de {{cantidadpreguntas}}</strong>{{pregunta.descripcion}}</h3>
                         <div class="review_block_smiles">
 	                                    <ul class="clearfix">
 	                                    		<li>
 	                                    			 <div class="container_smile">
-	                                                    <input type="radio" :id="'very_bad_'+(index+1)" :name="'question_'+(index+1)" class="required" value="1" :onchange="'getVals(this, '+preguntasvalue+(index+1)+comillasimple+');'">
+	                                                    <input type="radio" :id="'very_bad_'+(index+1)" :name="'radio'+pregunta.id_pregunta" class="required" value="1" @change="getSeleccion" required>
 	                                                    <label class="radio smile_1" :for="'very_bad_'+(index+1)"><span>Muy mal</span></label>
 	                                                </div>
 	                                    		</li>
 	                                    		<li>
 	                                    		 <div class="container_smile">
-	                                                    <input type="radio" :id="'bad_'+(index+1)" :name="'question_'+(index+1)" class="required" value="2" :onchange="'getVals(this, '+preguntasvalue+(index+1)+comillasimple+');'">
+	                                                    <input type="radio" :id="'bad_'+(index+1)" :name="'radio'+pregunta.id_pregunta" class="required" value="2" @change="getSeleccion" required> 
 	                                                    <label class="radio smile_2" :for="'bad_'+(index+1)"><span>Mal</span></label>
 	                                                </div>
 	                                    		</li>
 	                                    		<li>
 	                                                <div class="container_smile">
-	                                                    <input type="radio" :id="'average_'+(index+1)" :name="'question_'+(index+1)" class="required" value="3" :onchange="'getVals(this, '+preguntasvalue+(index+1)+comillasimple+');'">
+	                                                    <input type="radio" :id="'average_'+(index+1)" :name="'radio'+pregunta.id_pregunta" class="required" value="3" @change="getSeleccion" required> 
 	                                                    <label class="radio smile_3" :for="'average_'+(index+1)"><span>Normal</span></label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="container_smile">
-	                                                    <input type="radio" :id="'good_'+(index+1)" :name="'question_'+(index+1)" class="required" value="4" :onchange="'getVals(this, '+preguntasvalue+(index+1)+comillasimple+');'">
+	                                                    <input type="radio" :id="'good_'+(index+1)" :name="'radio'+pregunta.id_pregunta" class="required" value="4" @change="getSeleccion" required>
 	                                                    <label class="radio smile_4" :for="'good_'+(index+1)"><span>Bueno</span></label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="container_smile">
-	                                                    <input type="radio" :id="'very_good_'+(index+1)" :name="'question_'+(index+1)" class="required" value="5" :onchange="'getVals(this, '+preguntasvalue+(index+1)+comillasimple+');'">
+	                                                    <input type="radio" :id="'very_good_'+(index+1)" :name="'radio'+pregunta.id_pregunta" class="required" value="5" @change="getSeleccion" required>
 	                                                    <label class="radio smile_5" :for="'very_good_'+(index+1)"><span>Muy bueno</span></label>
 	                                                </div>
 	                                            </li>
@@ -161,19 +163,19 @@ $randomnum= rand(1,3);
                     <div class="col-5">
                               
                     <label class="container_check">Por favor acepte nuestros <a href="#" data-toggle="modal" data-target="#terms-txt" style="color:#fff; text-decoration: underline;">Terminos y condiciones</a>
-	                                            <input type="checkbox" name="terms" value="Yes" class="required">
+	                                            <input type="checkbox" name="terms" value="Yes" class="required" required v-model="checked">
 	                                            <span class="checkmark"></span>
 	                                        </label>
                     </div>
                     <div class="col-7">
-                    <button type="submit" name="process" class="submit">Enviar</button>
+                    <button type="submit" name="process" class="submit" @click="checkform" >Enviar</button>
                     </div>
                     </div>
           
-	            
+	            </form>
 	            </div>
 	            <!-- /bottom-wizard -->	
-                </form>
+                <!--</form>-->
                 </div>
                 </div>
                 <div v-else>
@@ -244,7 +246,7 @@ $randomnum= rand(1,3);
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-
+<script  src="./assets/js/sweetalert.js"></script>
 <script  src="./assets/js/axios.js" ></script>
 <script  src="./assets/js/vue.js"></script>
 <script  src="src/votacion.js"></script>
