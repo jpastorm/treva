@@ -32,7 +32,7 @@ if (!isset($_SESSION['id_usuario'])) {
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="#" class="simple-text logo-mini">
           <!-- <div class="logo-image-small">
             <img src="./assets/img/logo-small.png">
           </div> -->
@@ -126,21 +126,39 @@ if (!isset($_SESSION['id_usuario'])) {
       <hr style="color: #0056b2;" />
         <input type="text" name="" value="<?php echo $_SESSION['id_usuario'] ?>" id="id_usuario" hidden>
         <div class="row d-flex justify-content-around">
-          <div class="col-md-4" v-for="formulario in formularios">
-            <div class="card">
+          <div class="col-md-2" v-for="formulario in formularios">
+            <div class="card d-flex justify-content-center">
               <div class="card-header">
-                <h4 class="card-title"> {{formulario.titulo}} </h4>
+                <h4 class="card-title" style="text-align: center"> {{formulario.titulo}} </h4>
+        
               </div>
-              <div class="card-body">
+       
+              <div class="card-body" >
                   <!--COMIENZO DE LA TABLA GAAA-->
-                  <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="assets/img/form.png" alt="Card image cap" width="10px" height="100px">
-                    <div class="card-body">
-                      <!--<p class="card-text">{{ formulario.titulo }} </p>-->
-                      <p class="card-text">{{ formulario.titulo }} </p>
-                      <a :href="'pregunta.php?id_form=' + formulario.id_formulario">Link permanente</a>
+                
+                  <p style="text-align: center; color: #373636; font-style: italic;">Creado el {{formulario.fecha}} a las {{formulario.hora}}</p>
+                  
+                    <div class="row">
+                    
+                      <div class="col-md-6">
+                      <a :href="'pregunta.php?id_form=' + formulario.id_formulario" class="btn btn-success" style="width: 100%; height: 80% "><i class="fa fa-table fa-5x" style="padding-top:3px"></i><h6></h6>Ver</a>
+                      </div>
+                      <div class="col-md-6">
+                      <a href="#" @click="verlink(formulario.titulo,formulario.link)" class="btn btn-warning" style="width: 100%; height: 80%; text-align: center"><i class="fa fa-globe fa-5x" style="padding-top:3px"></i><h6></h6>Link</a>
+                      </div>
+               
                     </div>
-                  </div>
+                    
+                    <div class="row">
+                      <div class="col-md-6">
+                      <a :href="'reportes?id='+formulario.id_formulario" target="_blank" class="btn btn-info" style="width: 100%; height: 80%; text-align: center"><i class="fa fa-area-chart fa-5x" style="padding-top:3px"></i><h6></h6>Datos</a>                      </div>
+                      <div class="col-md-6">
+                      <a href="#" class="btn btn-danger" style="width: 100%; height: 80%; text-align: center"><i class="fa fa-trash-o fa-5x" style="padding-top:3px"></i><h6></h6>Borrar</a>
+                      </div>
+            
+                    </div>
+               
+             
                   <!--ACABA LA TABLA GAAA-->
               </div>
             </div>

@@ -20,11 +20,11 @@
 				axios.post('api/v1/formulario.php',params).then(resp => {
 					console.log(resp.data);
 					if(resp.data.estado=="true"){
-						var newlink="treva.clan.pe/view.php?form="+resp.data.link;
+						var newlink="treva.clan.pe/votacion.php?link="+resp.data.link;
 						
 						Swal.fire({
 							title: "<p>Tu formulario fue creado</p>", 
-							html: '<a hreft="'+newlink+'">'+newlink+'</a>',
+							html: '<a href="'+newlink+'">'+newlink+'</a>',
 							confirmButtonText: "Aceptar", 
 						  });
 						  this.listar();
@@ -37,6 +37,35 @@
 						  })
 					}					
 
+				});
+			},
+
+			verlink:function(nombre,link){
+				let linkcompleto = "treva.clan.pe/votacion.php" + link;
+				let redirect="votacion.php?link="+link;
+				Swal.fire({
+					title: "Link de "+nombre,
+					html: 
+						'<input id="text_to_be_copied" class="swal2-input" value="'+linkcompleto+'" readonly></input>' +
+						'<b id="confirm" class="text-primary" hidden>Copiado en el portapapeles!</b>' +
+							'<br><button type="button" class="btn btn-success" id="btn-copy" style="margin-left:5px">Copiar</button>' +
+							'<a href="'+redirect+'" target="_blank" class="btn btn-warning" style="margin-left:5px">Ir a mi formulario</a>' +
+						'</div>',
+					showConfirmButton: false,
+					type: "success",
+					onOpen: () => {
+						$("#btn-copy").click(() => {
+							$("#btn-ok").prop('disabled', false);
+				
+							$("#text_to_be_copied").select();
+							$('#confirm').removeAttr('hidden')
+							document.execCommand("copy");
+						});
+				
+						$("#btn-ok").click(() => {
+							Swal.close();   
+						});
+					}
 				});
 			},
 			obtenerUsusario:function(){

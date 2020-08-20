@@ -35,6 +35,11 @@ if (!isset($_GET["link"])) {
 
     <!-- YOUR CUSTOM CSS -->
     <link href="assetsform/css/custom.css" rel="stylesheet">
+	<style>
+	.swal-wide{
+    width:850px !important;
+}
+	</style>
 </head>
 <?php 
 $randomnum= rand(1,3);
@@ -162,7 +167,8 @@ $randomnum= rand(1,3);
                  
                     <div class="col-5">
                               
-                    <label class="container_check">Por favor acepte nuestros <a href="#" data-toggle="modal" data-target="#terms-txt" style="color:#fff; text-decoration: underline;">Terminos y condiciones</a>
+                    <label class="container_check">Por favor acepte nuestros 
+					<a  href="#"  @click="terminos()" style="color:#fff; text-decoration: underline;">Terminos y condiciones</a>
 	                                            <input type="checkbox" name="terms" value="Yes" class="required" required v-model="checked">
 	                                            <span class="checkmark"></span>
 	                                        </label>
@@ -211,7 +217,7 @@ $randomnum= rand(1,3);
 	                </div>
 	                <div class="col-md-9">
 	                    <ul class="clearfix">
-	                        <li><a href="#terms-txt" class="animated_link" target="_parent">Crear mi propio formulario</a></li>
+	                        <li><a href="." class="animated_link" target="_parent">Crear mi propio formulario</a></li>
 
 	                    </ul>
 	                </div>
