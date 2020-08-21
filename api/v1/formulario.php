@@ -25,7 +25,7 @@ $dbConn =  connect($db);
       if(isset($_GET['id_usuario']))
       {
 		//mostrar los formularios de un usuario por id
-          $sql = $dbConn->prepare("SELECT * FROM formulario where id_usuario=:id_usuario order by fecha DESC");
+          $sql = $dbConn->prepare("SELECT * FROM formulario where id_usuario=:id_usuario and estado='A' order by fecha DESC");
           $sql->bindValue(':id_usuario', $_GET['id_usuario']);
           $sql->execute();
           $sql->setFetchMode(PDO::FETCH_ASSOC);

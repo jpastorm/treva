@@ -26,15 +26,15 @@
 							title: "<p>Tu formulario fue creado</p>", 
 							html: '<a href="'+newlink+'">'+newlink+'</a>',
 							confirmButtonText: "Aceptar", 
-						  });
-						  this.listar();
+						});
+						this.listar();
 					}else{
 						Swal.fire({
 							icon: 'error',
 							title: 'Oops...',
 							text: 'Something went wrong!',
 							footer: '<a href>Why do I have this issue?</a>'
-						  })
+						})
 					}					
 
 				});
@@ -46,22 +46,22 @@
 				Swal.fire({
 					title: "Link de "+nombre,
 					html: 
-						'<input id="text_to_be_copied" class="swal2-input" value="'+linkcompleto+'" readonly></input>' +
-						'<b id="confirm" class="text-primary" hidden>Copiado en el portapapeles!</b>' +
-							'<br><button type="button" class="btn btn-success" id="btn-copy" style="margin-left:5px">Copiar</button>' +
-							'<a href="'+redirect+'" target="_blank" class="btn btn-warning" style="margin-left:5px">Ir a mi formulario</a>' +
-						'</div>',
+					'<input id="text_to_be_copied" class="swal2-input" value="'+linkcompleto+'" readonly></input>' +
+					'<b id="confirm" class="text-primary" hidden>Copiado en el portapapeles!</b>' +
+					'<br><button type="button" class="btn btn-success" id="btn-copy" style="margin-left:5px">Copiar</button>' +
+					'<a href="'+redirect+'" target="_blank" class="btn btn-warning" style="margin-left:5px">Ir a mi formulario</a>' +
+					'</div>',
 					showConfirmButton: false,
 					type: "success",
 					onOpen: () => {
 						$("#btn-copy").click(() => {
 							$("#btn-ok").prop('disabled', false);
-				
+
 							$("#text_to_be_copied").select();
 							$('#confirm').removeAttr('hidden')
 							document.execCommand("copy");
 						});
-				
+
 						$("#btn-ok").click(() => {
 							Swal.close();   
 						});
@@ -124,6 +124,29 @@
 						console.log(this.descripcion);
 						console.log(this.puntajeMax);
 						this.verificar();
+					}
+				})
+			},
+			desactivarForm:function(id_form) {
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+					if (result.value) {
+						Swal.fire(
+							'Deleted!',
+							'Your file has been deleted.',
+							'success'
+							);
+						axios.put("api/v1/formulario.php?id_formulario="+id_form+"&&estado=I").then(resp => {
+							console.log(resp.data);		
+							this.listar();					
+						});						
 					}
 				})
 			},

@@ -153,11 +153,11 @@ if (!isset($_SESSION['id_usuario'])) {
                       <div class="col-md-6">
                       <a :href="'reportes?id='+formulario.id_formulario" target="_blank" class="btn btn-info" style="width: 100%; height: 80%; text-align: center"><i class="fa fa-area-chart fa-5x" style="padding-top:3px"></i><h6></h6>Datos</a>                      </div>
                       <div class="col-md-6">
-                      <a href="#" class="btn btn-danger" style="width: 100%; height: 80%; text-align: center"><i class="fa fa-trash-o fa-5x" style="padding-top:3px"></i><h6></h6>Borrar</a>
+                      <a href="#" class="btn btn-danger" style="width: 100%; height: 80%; text-align: center" @click="desactivarForm(formulario.id_formulario)"><i class="fa fa-trash-o fa-5x" style="padding-top:3px"></i><h6></h6>Borrar</a>
                       </div>
             
                     </div>
-               
+                
              
                   <!--ACABA LA TABLA GAAA-->
               </div>
