@@ -2,9 +2,9 @@
 
 $db = [
     'host' => 'localhost',
-    'username' => 'admin',
-    'password' => 'password',
-    'db' => 'treva' //Cambiar al nombre de tu base de datos
+    'username' => 'root',
+    'password' => 'Sistemas.123!',
+    'db' => 'saponte_db_treva' //Cambiar al nombre de tu base de datos
 ];
 
 ?>
